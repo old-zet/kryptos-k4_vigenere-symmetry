@@ -33,6 +33,6 @@ Which means that 'NMURIBNSR' is obtained from ciphertext 'QQPRNGKSS' if the proc
 ## DISCUSSION
 More combinations of 'keyword' and 'start_pos' must be tested.
 
-KRYPTOS' K4 doesn't budge for now over 35 years, despite the efforts of thousands of cryptanalysts, mathematicians, and artists. It is a testament to poor ciphering decisions and the creator's amateurism. 
+Yet, KRYPTOS' K4 doesn't budge for now over 35 years, despite the efforts of thousands of cryptanalysts, mathematicians, and artists. It is a testament to poor ciphering decisions and the creator's amateurism. 
 
 It will die out with its creator soon enough, he's 75 after all. Such flawed codes should be forgotten.
