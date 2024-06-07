@@ -1,6 +1,38 @@
 # kryptos-k4_vigenere-symmetry
 Algorithmic implementation of the Avirai's proposition to solve KRYPTOS' K4 via the 'KRYPTOS' Vigenère's table with randomized initial position and symmetry transposition via a pair of inversed matrices (cf. https://www.reddit.com/r/codes/comments/wwqj3m/kryptos_yar_east_north_east_and_muko/)
 
+## DESCRIPTION
+Launch decipher_k4 in CMD (no modules required). The positional arguments are:
+  keyword               The keyword for the Vigenère's table (here 'KRYPTOS')
+  start_pos             The starting letter in the Vigenère's table (e.g. 'A')
+  input_string          The known cipher string (e.g. 'FLRVQQPRNGKSS')
+  output_string         The known plaintext string (e.g. 'EASTNORTHEAST')
+  admitted_n-mismatches The allowed number of mismatches between the cipher and plaintext strings
+
+Thus, 'python decipher_k4.py KRYPTOS A QQPRNGKSS NORTHEAST 2' produces: 
+
+Source Matrix:
+K/H B W E I
+V L N C X
+F Z J Y G
+A M Q O D
+T P S U R
+
+Target Matrix:
+I E W B K/H
+X C N L V
+G Y J Z F
+D O Q M A
+R U S P T
+
+Phase 1 transformation: NMURIBNSR
+Phase 2 transformation: NOPTK/HENST
+
+Which means that 'NMURIBNSR' is obtained from 'QQPRNGKSS' if the process starts at the letter A in the the 'KRYPTOS' Vigenère's table; then NOPTK/HENST is produced via the found pair of matrices, where the source matrix takes every letter in 'NMURIBNSR' then translates them via the target matrix to obtain 'NOPTK/HENST', or simply 'NOPTHENST', where two letters mismatch the plaintext, as defined by the last argument '2'.
+
+## DISCUSSION
+This correlates with Avirai's findings
+
 KRYPTOS' K4 doesn't budge for now over 35 years, despite the efforts of thousands of cryptanalysts, mathematicians, and artists. It is a testament to poor ciphering decisions and the creator's amateurism. 
 
 It will die out with its creator soon enough, he's 75 after all. Such flawed codes should be forgotten.
