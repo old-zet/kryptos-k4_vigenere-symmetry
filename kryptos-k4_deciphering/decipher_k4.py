@@ -153,7 +153,7 @@ def find_matching_matrices(input_string: str, output_string: str, admitted_n_of_
         if translated_string==output_string:
             return source_matrix, target_matrix
         if check_partial_match(translated_string, output_string, admitted_n_of_mismatches):
-            print("Partial Match Found:")
+            print("Match Found:")
             print_matrix(source_matrix, "Source")
             print_matrix(target_matrix, "Target")
             return source_matrix, target_matrix
