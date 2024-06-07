@@ -134,7 +134,7 @@ def process_string(input_string: str) -> list:
         final_result = [input_string]
     return list(set(final_result))
 
-def find_matching_matrices(input_string: str, output_string: str) -> tuple:
+def find_matching_matrices(input_string: str, output_string: str, admitted_n_of_mismatches: int=2) -> tuple:
     """Find then print source and target matrices 
     such that the translated input string matches the output string, 
     even if a partial match is found, it prints the matrices (see check_partial_match()).
@@ -142,6 +142,7 @@ def find_matching_matrices(input_string: str, output_string: str) -> tuple:
     Args:
         input_string (str): the string to be translated.
         output_string (str): the target string to match.
+        admitted_n_of_mismatches (int, optional): maximum number of allowed mismatches. Default is 2.
 
     Returns:
         tuple: tuple containing the source and target matrices.
@@ -151,20 +152,20 @@ def find_matching_matrices(input_string: str, output_string: str) -> tuple:
         translated_string = translate_string(input_string, source_matrix, target_matrix)
         if translated_string==output_string:
             return source_matrix, target_matrix
-        if check_partial_match(translated_string, output_string):
+        if check_partial_match(translated_string, output_string, admitted_n_of_mismatches):
             print("Partial Match Found:")
             print_matrix(source_matrix, "Source")
             print_matrix(target_matrix, "Target")
             return source_matrix, target_matrix
 
-def check_partial_match(translated_string: str, input_string: str, admitted_n_of_mismatches: int=5) -> bool:
+def check_partial_match(translated_string: str, input_string: str, admitted_n_of_mismatches: int) -> bool:
     """Check if the translated string partially 
     matches the input string within an admitted number of mismatches.
 
     Args:
         translated_string (str): the translated string to check.
         input_string (str): the target string to match against.
-        admitted_n_of_mismatches (int, optional): maximum number of allowed mismatches. Default is 5.
+        admitted_n_of_mismatches (int, optional): maximum number of allowed mismatches.
 
     Returns:
         bool: True if a partial match is found within the allowed mismatches, False otherwise.
@@ -221,22 +222,30 @@ def translate_via_vigenere(input_string: str, start_pos: str, grid: list, ordina
 def main():
     """Process command-line arguments.
     """
-    parser = argparse.ArgumentParser(description='Process some strings.')
-    parser.add_argument('start_pos', type=str, help='The starting position')
-    parser.add_argument('input_string', type=str, help='The input string')
-    parser.add_argument('output_string', type=str, help='The output string')
-    parser.add_argument('keyword', type=str, help='The keyword')
-
+    parser = argparse.ArgumentParser(
+        description="""
+        Attempt at solving K4 via the 'KRYPTOS' Vigenère's 
+        table with pre-selected initial position and symmetrical 
+        matrix transposition. The end result is a pair of matrices 
+        that binds the cipher with the plaintext."""
+    )
+    parser.add_argument('keyword', type=str, help="The keyword for the Vigenère's table (here 'KRYPTOS')")
+    parser.add_argument('start_pos', type=str, help="The starting letter in the Vigenère's table (e.g. 'A')")
+    parser.add_argument('input_string', type=str, help="The known cipher string (e.g. 'FLRVQQPRNGKSS')")
+    parser.add_argument('output_string', type=str, help="The known plaintext string (e.g. 'EASTNORTHEAST')")
+    parser.add_argument('admitted_n_mismatches', type=int, help="The allowed number of mismatches between the cipher and plaintext strings (e.g. 2)")
     args = parser.parse_args()
 
     start_pos = args.start_pos
     input_string = args.input_string
     output_string = args.output_string
     keyword = args.keyword
+    admitted_n_mismatches = args.admitted_n_mismatches
 
+    print("Searching for matching matrices...")
     grid, ordinary_alphabet = build_vigenere_grid(keyword)
     translated_string = translate_via_vigenere(input_string, start_pos, grid, ordinary_alphabet)
-    source_matrix, target_matrix = find_matching_matrices(translated_string, output_string)
+    source_matrix, target_matrix = find_matching_matrices(translated_string, output_string, admitted_n_mismatches)
     print("Input string:", input_string)
     print("Phase 1 transformation:", translated_string)
     deciphered_string = translate_string(translated_string, source_matrix, target_matrix)
@@ -249,9 +258,10 @@ if __name__=='__main__':
     k4_deciphered_seq = "EASTNORTHEASTBERLINCLOCK"
     k4_cipher_seq = "FLRVQQPRNGKSSNYPVTTMZFPK"
     # Residual variables.
-    start_pos = 'E'
-    input_string = "NYPVTTMZFPK"
-    output_string = "BERLINCLOCK"
     keyword = "KRYPTOS"
+    start_pos = 'A'
+    input_string = "FLRVQQPRNGKSS"
+    output_string = "EASTNORTHEAST"
+    admitted_n_mismatches = 2
 
     main()
