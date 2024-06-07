@@ -3,11 +3,16 @@ Algorithmic implementation of the Avirai's proposition to solve KRYPTOS' K4 via 
 
 ## DESCRIPTION
 Launch decipher_k4 in CMD (no modules required). The positional arguments are:
-  keyword               The keyword for the Vigenère's table (here 'KRYPTOS')
-  start_pos             The starting letter in the Vigenère's table (e.g. 'A')
-  input_string          The known cipher string (e.g. 'FLRVQQPRNGKSS')
-  output_string         The known plaintext string (e.g. 'EASTNORTHEAST')
-  admitted_n-mismatches The allowed number of mismatches between the cipher and plaintext strings
+
+_keyword_: The keyword for the Vigenère's table (e.g. 'KRYPTOS')
+  
+_start_pos_: The starting letter in the Vigenère's table (e.g. 'A')
+
+_input_string_: The known cipher string (e.g. 'FLRVQQPRNGKSS')
+  
+_output_string_: The known plaintext string (e.g. 'EASTNORTHEAST')
+  
+_admitted_n-mismatches_: The allowed number of mismatches between the cipher and plaintext strings
 
 Thus, 'python decipher_k4.py KRYPTOS A QQPRNGKSS NORTHEAST 2' produces: 
 
